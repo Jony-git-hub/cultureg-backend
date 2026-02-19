@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "tsx src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -21,7 +20,13 @@
   },
   "homepage": "https://github.com/Jony-git-hub/cultureg-backend#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "@prisma/client": "^6.11.1",
+    "@types/cors": "^2.8.19",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "prisma": "^6.11.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

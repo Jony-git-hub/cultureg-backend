@@ -1,3 +1,4 @@
+/*
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
@@ -7,8 +8,9 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "./dist",
     "target": "ES2022",
     "types": [],
     // For nodejs:
@@ -43,4 +45,25 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   }
+}
+*/
+
+{
+  "compilerOptions": {
+    "target": "ES2022",                   // TypeScript cible moderne
+    "module": "ESNext",                   // ESModules pour Node/TSX
+    "moduleResolution": "node",           // résout les imports comme Node
+    "strict": true,                       // toutes les vérifications strictes
+    "esModuleInterop": true,              // compatibilité import/export
+    "isolatedModules": true,              // nécessaire pour TSX/tsx
+    "verbatimModuleSyntax": true,         // garde la syntaxe import/export
+    "noUncheckedIndexedAccess": true,     // stricter TS
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,                 // ignore les fichiers de types tiers
+    "noUncheckedSideEffectImports": true,
+    "types": ["node"],                     // types Node disponibles
+    "sourceMap": true                      // si tu veux debugger TS dans VSCode
+  },
+  "include": ["src"],                      // inclut ton dossier source
+  "exclude": ["node_modules"]              // exclut node_modules
 }
