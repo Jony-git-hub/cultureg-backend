@@ -3,6 +3,8 @@ import userRoutes from "./user/user.routes";
 import cors from "cors";
 import * as dotenv from 'dotenv';
 import deckRoutes from "./deck/deck.routes";
+import {checkJWT} from "./JWT/jwtMiddleware";
+
 
 
 const app = express();
@@ -18,7 +20,7 @@ app.use(cors({
 
 
 app.use('/api/users', userRoutes);
-app.use('/api/decks', deckRoutes);
+app.use('/api/decks', checkJWT, deckRoutes);
 
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);

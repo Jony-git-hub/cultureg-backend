@@ -1,10 +1,22 @@
 import prisma from '../prisma'
-import type {CreateUserDto, UserDto} from "./user.dto";
+import type {CreateUserDto, UserDto, AuthenticationUserDto} from "./user.dto";
 
 async function addUser(data: CreateUserDto): Promise<UserDto> {
     try {
         return await prisma.user.create({
             data: data,
+        });
+    }catch (error){
+        throw error;
+    }
+}
+
+async function authenticateUser(email: string): Promise<AuthenticationUserDto | null> {
+    try {
+        return await prisma.user.findUnique({
+            where: {
+                email: email,
+            },
         });
     }catch (error){
         throw error;
@@ -32,6 +44,7 @@ async function deleteUserById(id: number): Promise<UserDto> {
 }
 
 export default {
+    authenticateUser,
     addUser,
     getAllUsers,
     deleteUserById,

@@ -1,3 +1,4 @@
+// format reponse 
 export interface User {
     id: number;
     email: string;
@@ -8,6 +9,7 @@ export interface User {
     elo: number;
 }
 
+// format requete
 export interface UserPayload extends Omit<User, 'id'> {
     password: string;
 }
