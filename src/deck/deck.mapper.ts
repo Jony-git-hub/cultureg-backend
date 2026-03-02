@@ -1,16 +1,19 @@
 import type {Deck, DeckPayload} from "./deck.model";
 import type {CreateDeckDto, DeckDto} from "./deck.dto";
 import userMapper from "../user/user.mapper";
+import cardMapper from "../card/card.mapper";
+import themeMapper from "../theme/theme.mapper";
+import languageMapper from "../languages/language.mapper";
 
 function dtoToObject(dto: DeckDto): Deck {
-    const user = userMapper.dtoToObject(dto.user)
-
     return {
         id: dto.id,
         name: dto.name,
         timestamp: Number(dto.timestamp),
-        user: user,
-        cards: [],
+        user: userMapper.dtoToObject(dto.user),
+        cards: dto.cards.map(card => cardMapper.dtoToObject(card)),
+        theme: themeMapper.dtoToObject(dto.theme),
+        language: languageMapper.dtoToObject(dto.language),
     }
 }
 
@@ -19,6 +22,8 @@ function objectToDto(deck: DeckPayload): CreateDeckDto {
         name: deck.name,
         timestamp: deck.timestamp,
         userId: deck.user.id,
+        themeId: deck.theme.id,
+        languageId: deck.language.id,
     }
 }
 

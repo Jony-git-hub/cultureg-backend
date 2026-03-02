@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { verify } from '../JWT/jwtHandler';
+import { verify } from './jwt.handler';
 
 declare global {
     namespace Express {

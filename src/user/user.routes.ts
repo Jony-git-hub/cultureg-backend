@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import userController from "./user.controller";
-import {checkJWT} from "../middleware/authenticate";
+import {checkJWT} from "../jwt/jwt.middleware";
 
 const router = Router();
+
+router.post('/authenticate', userController.authenticateUser);
 
 router.post('/', userController.addUser);
 

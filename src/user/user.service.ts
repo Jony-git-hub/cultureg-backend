@@ -1,4 +1,4 @@
-import type {UserPayload} from "./user.model";
+import type {User, UserPayload} from "./user.model";
 import userRepository from "./user.repository";
 import userMapper from "./user.mapper";
 import bcrypt from 'bcrypt';
@@ -11,7 +11,7 @@ async function authenticateUser(email: string, password: string) {
         throw new Error('INVALID_CREDENTIALS');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, dto.password);                                         
+    const isPasswordValid = await bcrypt.compare(password, dto.password);
 
     if (!isPasswordValid) {
         throw new Error('INVALID_CREDENTIALS');
