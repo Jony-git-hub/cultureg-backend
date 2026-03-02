@@ -1,23 +1,24 @@
 import type { Request, Response } from 'express';
 import deckService from './deck.service'
+import type {Deck} from "./deck.model";
 
 async function addDeck(req: Request, res: Response) {
-    /*try {
-        const user = req.body;
+    try {
+        const body = req.body;
 
-        const result = await userService.addUser(user);
+        const result = await deckService.addDeck(body);
 
         res.status(201).json({ status: 'success',message: 'Deck added successfully', data: result, errors : null});
     } catch (error) {
         console.error(error);
-        res.status(500).json({ status: "error", message: "Deck failed to add", data: null, errors: "An unexpected error occurred." });
-    }*/
+        res.status(500).json({ status: "error", message: "Failed to add Deck", data: null, errors: "An unexpected error occurred." });
+    }
 }
 
 async function getAllDecks(req: Request, res: Response) {
     try {
         const userId = req.params.userId;
-        let result = [];
+        let result: Deck[];
 
         if(userId){
             result = await deckService.getAllDecksByUserId(Number(userId));
@@ -28,73 +29,58 @@ async function getAllDecks(req: Request, res: Response) {
         res.status(200).json({status: 'success', message: 'Decks fetched successfully', data: result, errors: null});
     } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", message: "Decks failed to fetch", data: null, errors: "An unexpected error occurred."});
+        res.status(500).json({status: "error", message: "Failed to fetch Decks", data: null, errors: "An unexpected error occurred."});
     }
 }
 
 async function getDeckById(req: Request, res: Response) {
     try {
-        /* const workerCellId = req.params.id;
 
-         if (!workerCellId) {
-             return res.status(400).json({ status: "error", message: "Worker Cell ID is required.", errors: "Worker Cell ID is required" });
-         }
-
-         const result = await workerCellService.getWorkerCellWithAffectationsById(workerCellId);
-
-         if (!result) {
-             return res.status(404).json({ status: "error", message: "Worker Cell not found.", errors: "Worker Cell not found" });
-         }*/
-
-        //res.status(200).json({ status: 'success', message: 'Worker Cell fetched successfully', data: result, errors: null });
     } catch (error) {
-        res.status(500).json({ status: "error", message: "Failed to fetch Worker Cell.", errors: "An unexpected error occurred." });
+        res.status(500).json({ status: "error", message: "Failed to fetch Deck", errors: "An unexpected error occurred." });
     }
 }
 
 async function updateDeckById(req: Request, res: Response) {
-    /*try {
-        const dashboardId = req.params.id;
-        const blobName = req.body.blob;
-        const blob = await azureBlobService.read('dashboard-update-request', blobName)
+    try {
+        const id = req.params.id;
+        const body = req.body;
 
-        if (!dashboardId) {
-            return res.status(400).json({ status: "error", message: "Dashboard ID is required", errors: "Missing ID" });
+        if (!id) {
+            return res.status(400).json({ status: "error", message: "Id is required", errors: "Missing ID" });
         }
 
-        const result = await dashboardService.updateDashboardById(dashboardId, blob);
+        const result = await deckService.updateDeckById(Number(id), body);
 
-        if (!result) {
-            return res.status(404).json({ status: "error", message: "Dashboard not found", errors: "Dashboard does not exist" });
+        if(!result) {
+            return res.status(400).json({ status: "error", message: "Deck not found", errors: 'Deck does not exist' });
         }
 
-        const url = await azureBlobService.write("dashboard-update-response", `response_${formatDateTimeForFileName(new Date())}`, result)
-
-        res.status(200).json({ status: 'success', message: 'Dashboard updated successfully', data: url, errors: null });
+        res.status(200).json({status: 'success', message: 'Deck updated successfully', data: result, errors: null});
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "error", message: "Failed to update Dashboard", errors: "An unexpected error occurred." });
-    }*/
+        res.status(500).json({ status: "error", message: "Failed to update Deck", errors: "An unexpected error occurred." });
+    }
 }
 
 async function deleteDeckById(req: Request, res: Response) {
     try {
-        const userId = req.params.id;
+        const id = req.params.id;
 
-        if (!userId) {
-            return res.status(400).json({ status: "error", message: "User ID is required", errors: "Missing ID" });
+        if (!id) {
+            return res.status(400).json({ status: "error", message: "Id is required", errors: "Missing ID" });
         }
 
-        const result = await deckService.deleteDeckById(Number(userId));
+        const result = await deckService.deleteDeckById(Number(id));
 
         if(!result) {
-            return res.status(400).json({ status: "error", message: "Dashboard failed to delete", errors: 'The dashboard does not exist' });
+            return res.status(400).json({ status: "error", message: "Deck not found", errors: 'Deck does not exist' });
         }
 
-        res.status(200).json({ status: 'success',message: 'Dashboard deleted successfully', data: result, errors : null});
+        res.status(200).json({ status: 'success',message: 'Deck deleted successfully', data: result, errors : null});
     } catch (error) {
         console.error(error);
-        res.status(500).json({ status: "error", message: "Dashboard failed to delete", errors: "An unexpected error occurred." });
+        res.status(500).json({ status: "error", message: "Failed to delete Deck", errors: "An unexpected error occurred." });
     }
 }
 

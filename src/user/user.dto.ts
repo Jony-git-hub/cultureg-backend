@@ -7,6 +7,10 @@ export interface AuthenticationUserDto extends User {
     password: string;
 }
 
+export interface AuthenticationUserDto extends User {
+    password: string;
+}
+
 export interface CreateUserDto extends Omit<User, 'id'> {
     password: string;
 }

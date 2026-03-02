@@ -1,6 +1,6 @@
-import type {Deck} from "../deck/deck.model";
+import type {Card} from "./card.model";
 
-export interface Card {
+export interface CardDto extends Card{
     id: number;
     name: string;
     question: string;
@@ -10,6 +10,6 @@ export interface Card {
     wrongAnswer3: string;
 }
 
-export interface CardPayload extends Omit<Card, 'id'> {
-    deck: Deck
+export interface CreateCardDto extends Omit<Card, 'id'> {
+    deckId: number;
 }

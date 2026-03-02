@@ -1,20 +1,20 @@
 import type { Request, Response } from 'express';
 import userService from './user.service'
-import {sign} from "../JWT/jwtHandler";
+import {sign} from "../jwt/jwt.handler";
 
 async function authenticateUser(req: Request, res: Response) {
     try {
         const login: {email: string, password: string} = req.body;
 
         const result = await userService.authenticateUser(login.email, login.password);
-        
+
             const jwt = sign(result, {
                 expiresIn: '8h',
             });
             res.status(201).send(jwt);
-        
+
             res.status(404);
-    
+
     } catch (error) {
         console.error(error);
         res.status(500);

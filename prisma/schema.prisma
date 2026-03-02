@@ -42,15 +42,17 @@ model Theme {
 
 //DECK
 model Deck {
-  id        Int    @id @default(autoincrement())
-  name      String
-  timestamp BigInt
-  user      User   @relation("user_decks", fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  theme     Theme  @relation("theme_decks", fields: [themeId], references: [id], onDelete: Cascade)
-  themeId   Int
-  cards     Card[] @relation("deck_cards")
-  likes     Like[] @relation("deck_likes")
+  id         Int      @id @default(autoincrement())
+  name       String
+  timestamp  BigInt
+  user       User     @relation("user_decks", fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  theme      Theme    @relation("theme_decks", fields: [themeId], references: [id], onDelete: Cascade)
+  themeId    Int
+  cards      Card[]   @relation("deck_cards")
+  likes      Like[]   @relation("deck_likes")
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId Int
 }
 
 model Like {
@@ -60,6 +62,13 @@ model Like {
   deckId Int
 
   @@id([userId, deckId])
+}
+
+model Language {
+  id    Int    @id @default(autoincrement())
+  code  String @unique
+  name  String
+  decks Deck[]
 }
 
 //CARD
